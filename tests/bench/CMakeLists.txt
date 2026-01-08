@@ -4,7 +4,7 @@ include(CTest)
 file(GLOB BENCH_SRCS
         "${CMAKE_CURRENT_SOURCE_DIR}/benchmark_*.c"
 )
-
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
 foreach(variant IN LISTS VARIANTS)
     string(REPLACE "-" "_" safe_var ${variant})
 

@@ -14,6 +14,11 @@
 #define NB_SAMPLES 1000
 
 inline static uint64_t cpucyclesStart(void) {
+#if defined(__riscv)
+    unsigned long times;
+    __asm__ __volatile__ ("rdtime %0" : "=r" (times));
+    return times;
+#else
     unsigned hi, lo;
     __asm__ __volatile__(
         "CPUID\n\t"
@@ -24,9 +29,15 @@ inline static uint64_t cpucyclesStart(void) {
         :
         : "%rax", "%rbx", "%rcx", "%rdx");
     return ((uint64_t)lo) ^ (((uint64_t)hi) << 32);
+#endif
 }
 
 inline static uint64_t cpucyclesStop(void) {
+#if defined(__riscv)
+    unsigned long times;
+    __asm__ __volatile__ ("rdtime %0" : "=r" (times));
+    return times;
+#else
     unsigned hi, lo;
     __asm__ __volatile__(
         "RDTSCP\n\t"
@@ -37,6 +48,7 @@ inline static uint64_t cpucyclesStop(void) {
         :
         : "%rax", "%rbx", "%rcx", "%rdx");
     return ((uint64_t)lo) ^ (((uint64_t)hi) << 32);
+#endif
 }
 
 static inline uint64_t get_time_ns(void) {

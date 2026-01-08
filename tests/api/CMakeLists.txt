@@ -4,7 +4,7 @@ include(CTest)
 file(GLOB API_TEST_SRCS
         "${CMAKE_CURRENT_SOURCE_DIR}/test_*.c"
 )
-
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
 set(API_MAIN_SRC "${CMAKE_CURRENT_SOURCE_DIR}/tests_main.c")
 
 foreach(variant IN LISTS VARIANTS)
