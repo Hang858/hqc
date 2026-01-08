@@ -10,7 +10,6 @@
 #define SHA3_256_RATE 136
 #define SHA3_384_RATE 104
 #define SHA3_512_RATE 72
-
 // // Context for incremental API
 // typedef struct {
 //     uint64_t ctx[26];
@@ -45,10 +44,10 @@
 // typedef struct {
 //     uint64_t ctx[26];
 // } sha3_512incctx;
+// #endif
 
 typedef struct {
     uint64_t ctx[26]; 
-    uint8_t use_hardware;    // 1: 启用硬件 buffer, 0: 纯软件
     uint8_t *buffer;         // 输入缓冲区
     size_t buf_len;          
     size_t buf_cap;          

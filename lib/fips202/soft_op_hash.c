@@ -10,7 +10,10 @@
 #define OPH_SHAKE256_RATE 136
 #define OPH_SHA3_256_RATE 136
 #define OPH_SHA3_512_RATE 72
-#define OPH_SHA3_384_RATE 104 
+#define OPH_SHA3_384_RATE 104
+#define USE_HARDWARE_HASH
+
+unsigned long long g_oph_calls = 0;
 
 // --- 内部辅助函数 ---
 
@@ -277,6 +280,7 @@ static void oph_absorb_once(uint64_t s[25], unsigned int r,
 int OP_hash(uint8_t alg, uint8_t mode, int n, void *input, int input_len, void *output) {
     // 基础参数检查
     (void)mode;
+    g_oph_calls++;
     if (input == NULL || output == NULL || input_len < 0 || n <= 0) {
         return -1;
     }

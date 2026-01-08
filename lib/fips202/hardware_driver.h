@@ -15,7 +15,7 @@
 #define OP_MODE_SPHINCS 2
 #define INITIAL_HW_BUFFER_SIZE 4096
 #define INITIAL_HW_OUTPUT_SIZE 1024
-
+#define USE_HARDWARE_HASH
 int OP_hash(uint8_t alg, uint8_t mode, int n, void *input, int input_len, void *output);
 
 #endif
