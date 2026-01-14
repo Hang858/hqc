@@ -101,7 +101,6 @@ void hash_i(uint8_t *output, const uint8_t *seed) {
     sha3_512_inc_absorb(&i_hash_ctx, seed, SEED_BYTES);
     sha3_512_inc_absorb(&i_hash_ctx, &i_domain, 1);
     sha3_512_inc_finalize(output, &i_hash_ctx);
-    keccak_state_free((keccak_state*)&i_hash_ctx);
 }
 
 /**
@@ -117,7 +116,6 @@ void hash_h(uint8_t *output, const uint8_t ek_kem[PUBLIC_KEY_BYTES]) {
     sha3_256_inc_absorb(&h_hash_ctx, ek_kem, PUBLIC_KEY_BYTES);
     sha3_256_inc_absorb(&h_hash_ctx, &h_domain, 1);
     sha3_256_inc_finalize(output, &h_hash_ctx);
-    keccak_state_free((keccak_state*)&h_hash_ctx);
 }
 
 /**
@@ -138,7 +136,6 @@ void hash_g(uint8_t *output, const uint8_t hash_ek_kem[SEED_BYTES], const uint8_
     sha3_512_inc_absorb(&g_hash_ctx, salt, SALT_BYTES);
     sha3_512_inc_absorb(&g_hash_ctx, &i_domain, 1);
     sha3_512_inc_finalize(output, &g_hash_ctx);
-    keccak_state_free((keccak_state*)&g_hash_ctx);
 }
 
 /**
@@ -161,5 +158,4 @@ void hash_j(uint8_t *output, const uint8_t hash_ek_kem[SEED_BYTES], const uint8_
     sha3_256_inc_absorb(&k_hash_ctx, c_kem->salt, SALT_BYTES);
     sha3_256_inc_absorb(&k_hash_ctx, &k_domain, 1);
     sha3_256_inc_finalize(output, &k_hash_ctx);
-    keccak_state_free((keccak_state*)&k_hash_ctx);
 }

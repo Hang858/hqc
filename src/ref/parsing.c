@@ -20,7 +20,6 @@ void hqc_dk_pke_from_string(uint64_t *y, const uint8_t *dk_pke) {
     shake256_xof_ctx dk_xof_ctx = {0};
     xof_init(&dk_xof_ctx, dk_pke, SEED_BYTES);
     vect_sample_fixed_weight1(&dk_xof_ctx, y, PARAM_OMEGA);
-    keccak_state_free((keccak_state*)&dk_xof_ctx);
     // Zeroize sensitive data
     memset_zero(&dk_xof_ctx, sizeof dk_xof_ctx);
 }
@@ -39,7 +38,6 @@ void hqc_ek_pke_from_string(uint64_t *h, uint64_t *s, const uint8_t *ek_pke) {
     vect_set_random(&ek_xof_ctx, h);
 
     memcpy(s, ek_pke + SEED_BYTES, VEC_N_SIZE_BYTES);
-    keccak_state_free((keccak_state*)&ek_xof_ctx);
 }
 
 /**

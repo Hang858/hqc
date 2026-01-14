@@ -12,7 +12,6 @@
 
 #define NB_TEST    10
 #define NB_SAMPLES 10
-extern unsigned long long g_oph_calls;
 
 inline static uint64_t cpucyclesStart(void) {
 #if defined(__riscv)
@@ -72,28 +71,6 @@ int main(void) {
     unsigned char seed[48] = {0};
     syscall(SYS_getrandom, seed, 48, 0);
     prng_init(seed, NULL, 48, 0);
-
-    // --- 新增：统计 OP_hash 调用次数的代码块 ---
-    printf("\n=== OP_hash Call Count Statistics ===\n");
-
-    // 1. 统计 Keygen
-    g_oph_calls = 0; // 清零
-    crypto_kem_keypair(pk, sk);
-    printf("Keygen OP_hash calls: %llu\n", g_oph_calls);
-
-    // 2. 统计 Encaps
-    g_oph_calls = 0; // 清零
-    crypto_kem_enc(ct, ss1, pk);
-    printf("Encaps OP_hash calls: %llu\n", g_oph_calls);
-
-    // 3. 统计 Decaps
-    g_oph_calls = 0; // 清零
-    crypto_kem_dec(ss2, ct, sk);
-    printf("Decaps OP_hash calls: %llu\n", g_oph_calls);
-
-    printf("=====================================\n\n");
-    // ----------------------------------------
-
     // warm-up
     for (size_t i = 0; i < NB_TEST; i++) {
         crypto_kem_keypair(pk, sk);
@@ -171,7 +148,6 @@ int main(void) {
     printf("Encaps : %.0f cycles, %.2f ms \n", encaps_cycles_avg, encaps_ms);
     printf("Decaps : %.0f cycles, %.2f ms \n", decaps_cycles_avg, decaps_ms);
     printf("\n");
-    printf("final OP_hash calls %llu\n", g_oph_calls);
 
     return 0;
 }

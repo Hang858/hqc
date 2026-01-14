@@ -3,68 +3,48 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "hardware_driver.h"
-
+// 需要修改为 #include "operator_interface.h" 的统一接口
+#include "PQCDevKitAPI/operator_interface.h"
 #define SHAKE128_RATE 168
 #define SHAKE256_RATE 136
 #define SHA3_256_RATE 136
 #define SHA3_384_RATE 104
 #define SHA3_512_RATE 72
-// // Context for incremental API
-// typedef struct {
-//     uint64_t ctx[26];
-// } shake128incctx;
-
-// // Context for non-incremental API
-// typedef struct {
-//     uint64_t ctx[25];
-// } shake128ctx;
-
-// // Context for incremental API
-// typedef struct {
-//     uint64_t ctx[26];
-// } shake256incctx;
-
-// // Context for non-incremental API
-// typedef struct {
-//     uint64_t ctx[25];
-// } shake256ctx;
-
-// // Context for incremental API
-// typedef struct {
-//     uint64_t ctx[26];
-// } sha3_256incctx;
-
-// // Context for incremental API
-// typedef struct {
-//     uint64_t ctx[26];
-// } sha3_384incctx;
-
-// // Context for incremental API
-// typedef struct {
-//     uint64_t ctx[26];
-// } sha3_512incctx;
-// #endif
-
+// Context for incremental API
 typedef struct {
-    uint64_t ctx[26]; 
-    uint8_t *buffer;         // 输入缓冲区
-    size_t buf_len;          
-    size_t buf_cap;          
-    
-    uint8_t *out_buffer;     // 输出缓冲区
-    size_t out_buf_len;      
-    size_t out_buf_pos;      
-    size_t out_buf_cap;      
-} keccak_state;
+    uint64_t ctx[26];
+} shake128incctx;
 
-typedef keccak_state shake128incctx;
-typedef keccak_state shake128ctx;
-typedef keccak_state shake256incctx;
-typedef keccak_state shake256ctx;
-typedef keccak_state sha3_256incctx;
-typedef keccak_state sha3_384incctx;
-typedef keccak_state sha3_512incctx;
+// Context for non-incremental API
+typedef struct {
+    uint64_t ctx[26];
+} shake128ctx;
+
+// Context for incremental API
+typedef struct {
+    uint64_t ctx[26];
+} shake256incctx;
+
+// Context for non-incremental API
+typedef struct {
+    uint64_t ctx[26];
+} shake256ctx;
+
+// Context for incremental API
+typedef struct {
+    uint64_t ctx[26];
+} sha3_256incctx;
+
+// Context for incremental API
+typedef struct {
+    uint64_t ctx[26];
+} sha3_384incctx;
+
+// Context for incremental API
+typedef struct {
+    uint64_t ctx[26];
+} sha3_512incctx;
+
 
 void shake128_absorb(shake128ctx *state, const uint8_t *input, size_t inlen);
 
@@ -104,6 +84,5 @@ void sha3_512_inc_absorb(sha3_512incctx *state, const uint8_t *input, size_t inl
 void sha3_512_inc_finalize(uint8_t *output, sha3_512incctx *state);
 
 void sha3_512(uint8_t *output, const uint8_t *input, size_t inlen);
-void keccak_state_free(keccak_state *state);
 
 #endif
