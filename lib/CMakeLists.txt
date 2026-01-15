@@ -13,4 +13,5 @@ add_library(fips202 STATIC ${FIPS202_SRCS})
 target_include_directories(fips202 PUBLIC
         "${CMAKE_CURRENT_SOURCE_DIR}/fips202"
         "${CMAKE_CURRENT_SOURCE_DIR}/fips202/PQCDevKitAPI"
+        "${CMAKE_CURRENT_SOURCE_DIR}/fips202/PQCDevKitAPI/soft"
 )
